@@ -28,3 +28,8 @@
 - Buttons: `.carousel-btn` (video library prev/next nav) was a transparent-fill, navy-outline button on a white section background — the handout explicitly disallows outline-only buttons outside the dark final CTA. Converted it to the spec's **Navy** button: fill/border `#1E2F5C` at rest, hover fill/border `#12203F` with the `0 6px 18px rgba(30,47,92,0.40)` glow and `translateY(-1px)` lift, `transition: all 0.25s ease`. Kept its circular `border-radius: 50%` (icon nav control, not a rectangular CTA — the 6px radius rule targets text buttons). The `.applied-tab` map filters and `.aih-eng-image-badge`/rotator caption badge are non-CTA UI (tab nav, pill badge) so only their colors were fixed, not restructured into the button spec.
 - No actual CTA button markup exists yet in the Contact/Request-a-Quote section (only text/rows) — when that module's HTML arrives, its buttons should follow the "dark final CTA" button rules (white-fill primary with navy text, outline secondary) since it sits on the `#1E2F5C → #000000` gradient.
 - Files changed: `HEAD.html`, `modules/module-02-why-engineered.html`, `NOTES.md`
+
+## Round 3 — Module 3 (In-House Capabilities)
+
+- No changes needed. Module 3 only uses the `.aih-cap-*` classes (section, wrapper, header, grid, card, card--navy, card-icon-wrap, card-body), all of which were already corrected to spec in Round 2's `HEAD.html` rebuild (teal/navy colors, 700 weight cap, black headings). No inline font/color styles and no buttons in this module's markup.
+- Files changed: `modules/module-03-capabilities.html` (added, unchanged from source), `NOTES.md`
