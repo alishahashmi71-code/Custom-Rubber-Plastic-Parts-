@@ -1,0 +1,21 @@
+<script>
+(function() {
+  'use strict';
+  function initVideoBackground() {
+    var video = document.getElementById('hero-video-bg');
+    if (!video) return;
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = true;
+    var playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(function() {
+        setTimeout(function() { video.play().catch(function() {}); }, 500);
+      });
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initVideoBackground);
+  else initVideoBackground();
+  window.addEventListener('load', function() { setTimeout(initVideoBackground, 100); });
+})();
+</script>
