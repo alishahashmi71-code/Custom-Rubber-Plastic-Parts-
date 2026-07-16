@@ -56,3 +56,11 @@
 - No font/color/button changes here — this file is pure JS.
 - Action needed: re-paste `FOOTER.html` into HubSpot Page Settings → Advanced Options → Footer HTML.
 - Files changed: `FOOTER.html`, `NOTES.md`
+
+## Round 7 — Video still not showing: not a code bug, wrong HubSpot module type
+
+- Confirmed with the page owner: Module 1 had been pasted into a **Rich Text** module, not a **Custom HTML / Source Code / Embed** module. Rich Text modules sanitize saved content and strip raw `<video>`, `<source>`, and `<script>` tags, so the video (and any inline script) never survives even when the source file is correct.
+- No file changes made — `modules/module-01-hero-waterjet.html` and `FOOTER.html` are already correct as of Round 6.
+- Action needed: in the HubSpot page editor, delete the Rich Text module holding Module 1's content and replace it with a Custom HTML / Source Code module, then paste the same file content into that instead. Every module in this project (`module-01` through `module-07`) is written assuming a Custom HTML module, per the handout's architecture rules — Rich Text will silently strip video/script/possibly iframe tags in any of them.
+- **Follow-up flagged**: Module 5 (service map) also contains a raw `<iframe>` for the Google Maps embed. If it's in a Rich Text module too, the iframe is likely being stripped the same way and should be checked/moved to a Custom HTML module.
+- Files changed: `NOTES.md` only
