@@ -1,3 +1,30 @@
+<!-- ========================================
+     FOOTER HTML
+     PASTE INTO: HubSpot Page Settings > Advanced Options > Footer HTML
+     ======================================== -->
+<script>
+  // Smooth Scroll for Anchor Links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === '#' || href === '') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+  // Scroll Animation Trigger
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('is-visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.applied-animate-on-scroll').forEach(el => observer.observe(el));
+  console.log('Waterjet Cutting - Applied Industrial Technologies');
+</script>
+<!-- ========================================
+     HERO VIDEO BACKGROUND (Module 1)
+     ======================================== -->
 <script>
 (function() {
   'use strict';
@@ -17,5 +44,65 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initVideoBackground);
   else initVideoBackground();
   window.addEventListener('load', function() { setTimeout(initVideoBackground, 100); });
+})();
+</script>
+<!-- ========================================
+     INTERACTIVE MAP TABS
+     ======================================== -->
+<script>
+(function() {
+  'use strict';
+  function initTabs() {
+    var tabs = document.querySelectorAll('.applied-tab');
+    var tabContents = document.querySelectorAll('.applied-tab-content');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var tabType = this.getAttribute('data-tab');
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        this.classList.add('active');
+        tabContents.forEach(function(c) { c.classList.remove('active'); });
+        var active = document.querySelector('[data-tab-content="' + tabType + '"]');
+        if (active) active.classList.add('active');
+      });
+    });
+    if (tabs.length > 0) tabs[0].click();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTabs);
+  } else {
+    initTabs();
+  }
+  window.addEventListener('load', function() { setTimeout(initTabs, 100); });
+})();
+</script>
+<!-- ========================================
+     VIDEO CAROUSEL
+     ======================================== -->
+<script>
+(function() {
+  var carousel = document.getElementById('videoCarousel');
+  var prevBtn  = document.getElementById('prevBtn');
+  var nextBtn  = document.getElementById('nextBtn');
+  if (!carousel || !prevBtn || !nextBtn) return;
+  var scrollAmount = 400;
+  var autoScrollInterval;
+  var isUserInteracting = false;
+  prevBtn.addEventListener('click', function() { isUserInteracting = true; carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); resetAutoScroll(); });
+  nextBtn.addEventListener('click', function() { isUserInteracting = true; carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' }); resetAutoScroll(); });
+  function autoScroll() {
+    if (isUserInteracting) return;
+    var maxScroll = carousel.scrollWidth - carousel.clientWidth;
+    if (carousel.scrollLeft >= maxScroll - 10) carousel.scrollTo({ left: 0, behavior: 'smooth' });
+    else carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }
+  function startAutoScroll() { autoScrollInterval = setInterval(autoScroll, 5000); }
+  function resetAutoScroll() { clearInterval(autoScrollInterval); setTimeout(function() { isUserInteracting = false; startAutoScroll(); }, 10000); }
+  carousel.addEventListener('scroll', function() { if (!isUserInteracting) { isUserInteracting = true; resetAutoScroll(); } });
+  carousel.addEventListener('mouseenter', function() { clearInterval(autoScrollInterval); });
+  carousel.addEventListener('mouseleave', function() { if (!isUserInteracting) startAutoScroll(); });
+  startAutoScroll();
+  function updateButtons() { var maxScroll = carousel.scrollWidth - carousel.clientWidth; prevBtn.disabled = carousel.scrollLeft <= 0; nextBtn.disabled = carousel.scrollLeft >= maxScroll - 10; }
+  carousel.addEventListener('scroll', updateButtons);
+  updateButtons();
 })();
 </script>

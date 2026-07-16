@@ -48,3 +48,11 @@
 - **Bug caught while comparing modules**: Modules 2, 3, and 7 were missing that same `.applied-landing-page` wrapper around their outermost element. Per the handout's font-stick rule (section 2b), the universal `.applied-landing-page, .applied-landing-page *` selector in `HEAD.html` only reaches elements that are descendants of a literal `.applied-landing-page` wrapper — since each module pastes into its own separate HubSpot Custom HTML block, each module needs its own copy of that wrapper, not just Module 1's. Without it, those three modules would have rendered in HubSpot's default theme font instead of DIN 2014 despite `HEAD.html` being correct.
 - Fixed by wrapping the full contents of `modules/module-02-why-engineered.html`, `modules/module-03-capabilities.html`, and `modules/module-07-contact.html` in `<div class="applied-landing-page">...</div>`. No other content in those files changed.
 - Files changed: `modules/module-02-why-engineered.html`, `modules/module-03-capabilities.html`, `modules/module-07-contact.html`, `modules/module-05-service-map.html`, `NOTES.md`
+
+## Round 6 — FOOTER.html bug fix (hero video not playing)
+
+- Root cause of "background video not showing up" on Module 1: in Round 1, the hero video-autoplay script (originally inline in Module 1's source) was extracted into a `FOOTER.html` I scaffolded from scratch, since Module 1 was the first file in an empty repo and no real footer existed yet. The user has now shared the actual, pre-existing `FOOTER.html` (smooth-scroll, interactive-map-tabs, and video-carousel scripts) — it never included the hero video script, so once the real footer was pasted into HubSpot it silently dropped hero video playback. The `<video>` tag also has no `autoplay` attribute, so nothing else was calling `.play()`.
+- Fix: merged the hero video-background script into the real `FOOTER.html` as its own labeled block (right after the smooth-scroll/scroll-animation block, before the map tabs script), keeping the map-tabs and video-carousel scripts byte-for-byte unchanged.
+- No font/color/button changes here — this file is pure JS.
+- Action needed: re-paste `FOOTER.html` into HubSpot Page Settings → Advanced Options → Footer HTML.
+- Files changed: `FOOTER.html`, `NOTES.md`
