@@ -33,3 +33,11 @@
 
 - No changes needed. Module 3 only uses the `.aih-cap-*` classes (section, wrapper, header, grid, card, card--navy, card-icon-wrap, card-body), all of which were already corrected to spec in Round 2's `HEAD.html` rebuild (teal/navy colors, 700 weight cap, black headings). No inline font/color styles and no buttons in this module's markup.
 - Files changed: `modules/module-03-capabilities.html` (added, unchanged from source), `NOTES.md`
+
+## Round 4 — Module 7 (Request a Quote — Contact)
+
+- This card sits on `.aih-contact-card`'s navy-to-black gradient — the handout's dark-final-CTA exception, with its own button spec (white fill, navy text, no colored border, neutral shadow) distinct from the standard primary/secondary/navy variants.
+- Eyebrow: removed the inline `<span style="color: #ffffff;">` wrapper around "Request a Quote" so it falls through to `.aih-contact-card p.eyebrow` (plain teal `#007b85`, fixed in Round 2) instead of overriding to white.
+- Button ("Request a Quote"): was yellow `#FDB81E` fill with navy `#1b0f3a` text and `font-weight: 800` — both banned (yellow) and over the DIN weight ceiling (800 renders in Helvetica, not DIN 2014). Rebuilt to the dark-final-CTA primary spec: white fill, navy `#1E2F5C` text (the one sanctioned place navy is text), no colored border, `font-weight: 700`, `border-radius: 6px` (unchanged), `transition: all 0.25s ease`, resting shadow `0 4px 14px rgba(0,0,0,0.2)`, hover deepens to `0 8px 24px rgba(0,0,0,0.3)` with a `translateY(-2px)` lift. Added the DIN 2014 font stack explicitly (was relying on inheritance).
+- No other changes: `.aih-contact-*` classes for the rest of the card (headings, list, icon rows) were already corrected in Round 2's `HEAD.html`.
+- Files changed: `modules/module-07-contact.html`, `NOTES.md`
