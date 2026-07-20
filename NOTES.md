@@ -99,3 +99,11 @@
 - No module files needed changes; this is a one-line `HEAD.html` fix.
 - Action needed: re-paste `HEAD.html` into HubSpot Page Settings → Advanced Options → Head HTML and republish.
 - Files changed: `HEAD.html`, `NOTES.md`
+
+## Round 11 — Module-by-module self-contained font fix (per page owner's direction)
+
+- Page owner asked to stop relying on fixing this via the shared `HEAD.html` rule and instead refine each module directly, module by module — matching the pattern that already made Module 1 reliable.
+- Added explicit inline `font-family: 'din-2014', 'DIN 2014', 'DIN Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;` directly onto every text-bearing element (headings, paragraphs, list items, labels, tab buttons, location-card fields) in `modules/module-02-why-engineered.html`, `modules/module-03-capabilities.html`, `modules/module-05-service-map.html`, and `modules/module-07-contact.html`. Module 1 already had this from Round 1 and needed no change.
+- Verified with a grep sweep that every `h1`-`h3`, `p`, `li`, `span`, and `button` tag across all four files now carries the inline declaration (icon-dot spans with no text, e.g. `.applied-tab-icon`, were excluded since they render a color swatch, not text).
+- Left the `.aih-*`/`.applied-*`/`.video-*` classes and the Round 10 `!important` font-stick rule in `HEAD.html` in place — colors, spacing, hover states, and responsive breakpoints (grid column collapses, etc.) still come from those classes and would be lost if flattened to inline styles, which inline styles can't express (no media queries). The inline `font-family` is purely a redundant, self-contained guarantee so each module's typeface no longer depends on `HEAD.html` being correctly pasted, re-published, or winning any specificity fight.
+- Files changed: `modules/module-02-why-engineered.html`, `modules/module-03-capabilities.html`, `modules/module-05-service-map.html`, `modules/module-07-contact.html`, `NOTES.md`
