@@ -83,3 +83,19 @@
   2. `.applied-tab` (map category filters) remain flat text tabs with an active-state underline, not restyled into any button-fill variant, and keep a `0.3s` transition rather than `0.25s`. They're literal `<button>` elements, so the handout's "every button" base rules technically reach them, but converting a tab-list into filled CTA buttons would break the segmented-nav pattern the page clearly intends. Only their colors were brought on-palette.
   Flagging both again in case you want them reconsidered now that the whole page is under review — otherwise no action taken.
 - Files changed: `modules/module-07-contact.html`, `NOTES.md`
+
+## Round 10 — Module 2 not rendering in DIN 2014 (font-stick specificity fix)
+
+- Reported: Module 2 wasn't picking up the DIN 2014 typeface. Confirmed with the page owner that colors/spacing/layout in Module 2 look correct — only the font is wrong, meaning `HEAD.html`'s CSS classes ARE reaching the module (ruling out a wrapper/scope problem, already fixed in Round 5).
+- Root cause: a specificity fight, not a scoping bug. The `.aih-why-*` color rules use `class + tag` selectors (e.g. `.aih-why-header h2`) which apparently outrank HubSpot's own theme CSS. The font-stick rule, though, is just `.applied-landing-page *` (a class + universal selector, specificity ~0,1,0) — wherever HubSpot's theme sets `font-family` on a tag with equal or higher specificity, it wins regardless of our rule being physically last in the file, since specificity beats source order. Module 1 never exposed this because every element there already carries an inline `font-family` (inline always wins); Modules 2/3/5/7 rely entirely on the one shared rule, so they were exposed.
+- Fix: added `!important` to the font-stick rule in `HEAD.html`, so it wins unconditionally instead of relying on specificity/order:
+  ```css
+  .applied-landing-page,
+  .applied-landing-page * {
+    font-family: "din-2014", "DIN 2014", "DIN Next", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  }
+  ```
+- Kept this fix in `HEAD.html` rather than inlining `font-family` on every element across Modules 2/3/5/7 — matches the handout's architecture rule that shared CSS lives in `HEAD.html`, and fixes all four affected modules at once instead of one at a time.
+- No module files needed changes; this is a one-line `HEAD.html` fix.
+- Action needed: re-paste `HEAD.html` into HubSpot Page Settings → Advanced Options → Head HTML and republish.
+- Files changed: `HEAD.html`, `NOTES.md`
